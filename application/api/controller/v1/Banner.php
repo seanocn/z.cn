@@ -9,28 +9,23 @@
 namespace app\api\controller\v1;
 
 
+use app\api\model\Banner as BannerModel;
 use app\api\validate\IDMustBePostiveInt;
+use app\lib\exception\BannerMissException;
+use think\Exception;
 
 class Banner
 {
-    /**
-     * 获取指定ID的banner信息
-     * @param $url /banner/:id
-     * @param $http GET
-     * @param $id banner的ID号
-     * @param IDMustBePostiveInt $IDMustBePostiveInt
-     * @throws \think\Exception
-     */
-    public function getBanner($id,IDMustBePostiveInt $IDMustBePostiveInt)
-    {
-        $IDMustBePostiveInt->goCheck();
 
-//        $data = [
-//            'id' => $id
-//        ];
-//        $validate = new IDMustBePostiveInt();
-//        $result = $validate->batch()->check($data);
-//        if ($result) {
-//        }
+    public function getBanner($id)
+    {
+        (new IDMustBePostiveInt())->goCheck();
+
+        $banner = BannerModel::getBannerById($id);
+        if (!$banner) {
+            throw new Exception('内部错误');
+//            throw new BannerMissException();
+        }
+        return $banner;
     }
 }
