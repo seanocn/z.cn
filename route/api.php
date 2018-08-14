@@ -9,4 +9,6 @@
 use think\facade\Route;
 
 //获取banner路由
-Route::get('banner/:id', 'api/v1.banner/getBanner');
+Route::get('api/:version/banner/:id', 'api/:version.banner/getBanner');
+
+Route::get('api/:version/theme','api/:version.theme/getSimpleList');

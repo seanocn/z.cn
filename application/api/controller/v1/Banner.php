@@ -1,31 +1,29 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: PinLi
- * Date: 2018/8/11
- * Time: 17:00
+ * Created by 七月
+ * User: 七月
+ * Date: 2017/2/15
+ * Time: 13:40
  */
 
 namespace app\api\controller\v1;
 
-
 use app\api\model\Banner as BannerModel;
-use app\api\validate\IDMustBePostiveInt;
+use app\api\validate\IDMustBePositiveInt;
 use app\lib\exception\BannerMissException;
-use think\Exception;
-
+/**
+ * Banner资源
+ */ 
 class Banner
 {
-
     public function getBanner($id)
     {
-        (new IDMustBePostiveInt())->goCheck();
+        (new IDMustBePositiveInt())->goCheck();
 
         $banner = BannerModel::getBannerById($id);
-        if (!$banner) {
-            throw new Exception('内部错误');
-//            throw new BannerMissException();
+        if (!$banner ) {
+            throw new BannerMissException();
         }
-        return $banner;
+        return json($banner);
     }
 }
